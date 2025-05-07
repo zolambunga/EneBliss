@@ -1,0 +1,72 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Lista Residencias</title>
+{% endblock %}
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              <i class="fa fa-lightbulb-o">Residências<small></small></i></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <div class="tile-body">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                  <tr>
+                    <th>Proprietario</th>
+                    <th>Usuario</th>
+                    <th>Nº</th>
+                    <th>Endereço</th>
+                    <th>Post</th>
+                    <th>E.Comprada</th>
+                    <th>E.Activa</th>
+                    <th>E.Consumida</th>
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for resid in residencias %}
+                  <tr>
+                    <td>{{ resid.nome_proprietario }}</td>
+                    <td>{{ resid.usuario }}</td>
+                    <td>{{ resid.numero_residencia }}</td>
+                    <td>{{ resid.endereco_residencia }}</td>
+                    <td>{{ resid.post.nome_post }}</td>
+                    <td>{{ resid.energia_comprada }}</td>
+                    <td>{{ resid.energia_activa }}</td>
+                    <td>{{ resid.energia_consumida }}</td>
+                    <td>
+                      <a href="">Ver</a>
+                    </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td>Nenhuma Residencis Encontrado</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Dashboar Operador</title>
+{% endblock %}
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              Ecosm<i class="fa fa-lightbulb-o">rt</i>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="tile">
+          {% if request.resolver_match.view_name == "editar-residencia" %}
+            <h3 class="tile-title">
+              <i class="fa fa-flash">Registro de Residências</i>
+            </h3>
+          {% else %}
+            <h3 class="tile-title">
+              <i class="fa fa-flash">Editar Dados da Residencia</i>
+            </h3>
+          {% endif %}
+          <div class="tile-body">
+            <form method="POST">
+              {% csrf_token %}
+
+              <div class="mb-3">
+                <label class="form-label" for="id_proprietario">Nome do Proprietário</label>
+                <input class="form-control" type="text" name="nome_proprietario" id="id_proprietario" placeholder="Insira o proprietario" value="{{ residencia_form.nome_proprietario.value|default:'' }}">
+              </div>
+
+              <!--div class="mb-3">
+                <label class="form-label" for="id_bilhete">Bilhete de Identidade</label>
+                <input class="form-control" type="text" name="" id="id_bilhete" placeholder="Insira o numero" value="">
+              </div-->
+
+              <div class="mb-3">
+                <label class="form-label" for="id_numero_residencia">Numero da Residência:</label>
+                <input class="form-control" type="number" name="numero_residencia" required="" id="id_numero_residencia" value="{{ residencia_form.numero_residencia.value|default:'' }}">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="id_endereco">Endereço da Residência:</label>
+                <input class="form-control" type="text" name="endereco_residencia" id="id_endereco"  value="{{ residencia_form.endereco_residencia.value|default:'' }}">
+              </div>
+
+
+
+              <div class="mb-3">
+                <label class="form-label"  for="id_post">Post da Residencia</label>
+                <select class="form-control" name="post" id="id_post">
+                  <option value="">Selecione um post</option>
+                  {% for post in residencia_form.post.field.queryset %}
+                  <option value="{{ post.id }}" {% if post.id == residencia_form.post.value %} selected{% endif %}>{{ post.nome_post }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- Mensagem de erro -->
+              {% if residencia_form.errors %}
+                <div class="alert alert-danger">
+                  <ul>
+                    {% for field in residencia_form %}
+                      {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                      {% endfor %}
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+              <div class="tile-footer">
+                <div class="row">
+                  <div class="col-md-8 col-md-offset-3">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-check-circle-fill me-2"></i>Confirmar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="#"><i class="bi bi-x-circle-fill me-2"></i>Cancel</a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--script src="{% static 'js/script.js' %}" defer></script-->
+
+{% endblock %}

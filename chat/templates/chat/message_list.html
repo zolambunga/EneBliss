@@ -1,0 +1,38 @@
+{% extends 'paginas/modelo.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>message</title>
+{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block destaque %}
+{% endblock %}
+
+{% block conteudo %}
+<h2>Suas mensagens</h2>
+
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>
+        <strong>De:</strong> {{ message.sender.username }} <br>
+        <strong>Para:</strong> {{ message.receiver.username }} <br>
+        <p> {{ message.content }}</p>
+        <p><small>{{ message.created_at }}</small></p>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Você não tem mensagens</p>
+{% endif %}
+
+{% endblock %}
+
+{% block rodape %}
+{% endblock %}
+
+{% block rodape-final %}
+{% endblock %}

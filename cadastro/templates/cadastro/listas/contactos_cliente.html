@@ -1,0 +1,105 @@
+
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Lista Clientes</title>
+{% endblock %}
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              <i class="fa fa-lightbulb-o">Consumidores <small>cadastrados</small></i>
+            </h3>
+          </div>
+        </div>
+
+        <div class="title_right">
+          <div class="form-group pull-right top_search">
+            <form action="{% url 'lista-clientes' %}" method="GET">
+              <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Pesquisar..." value="{{ search }}">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit">Go!</button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+
+        {% for cliente in clientes %}
+          <div class="col-md-4 col-sm-4  profile_details">
+            <div class="well profile_view">
+              <div class="col-sm-12">
+                <h4 class="brief"><i>Consumidor</i></h4>
+                <div class="left col-md-7 col-sm-7">
+                  <h2>
+                    {{ cliente.username }}
+                    <span style="width:8px; height:8px; display:inline-block; border-radius:50%;
+                      {% if cliente.online %} background-color: green; {% else %} background-color: red;
+                      {% endif %}">
+                    </span>
+                  </h2>
+                  <p><i class="fa fa-lightbulb-o"></i><strong> Id: </strong> {{ cliente.id }}</p>
+                  <ul class="list-unstyled">
+                    <li><i class="fa fa-map-marker"></i> Endereço: {{ cliente.residencia.endereco_residencia }}</li>
+                    <li><i class="fa fa-phone"></i> Contact: {{ cliente.telefone }}</li>
+                  </ul>
+                </div>
+                <div class="right col-md-5 col-sm-5 text-center">
+                  {% if cliente.foto_perfil %}
+                    <!-- Exibir a foto de perfil -->
+                    <img src="{{ cliente.foto_perfil.url }}" width="120" height="50" alt="" title="" class="img-circle img-fluid">
+                  {% else %}
+                    <img src="/media/fotos_usuarios/sem-foto.png" alt="" title="" class="img-circle img-fluid">
+                  {% endif %}
+
+                  <!--img src="{% static 'images/picture.jpg' %}" alt="" class="img-circle img-fluid">
+                  <img src="{{ 'cliente.foto_perfil.url' }}" alt="Avatar" title="Change the avatar" class="img-circle img-fluid"-->
+                </div>
+              </div>
+              <div class=" profile-bottom text-center">
+                <div class=" col-sm-6 emphasis">
+                  <p class="ratings">
+                    <a>4.0</a>
+                    <a href="#"><span class="fa fa-star"></span></a>
+                    <a href="#"><span class="fa fa-star"></span></a>
+                    <a href="#"><span class="fa fa-star"></span></a>
+                    <a href="#"><span class="fa fa-star"></span></a>
+                    <a href="#"><span class="fa fa-star-o"></span></a>
+                  </p>
+                </div>
+                <div class=" col-sm-6 emphasis">
+                  {% if user.groups.all.0.name == 'Admin' %}
+                    <button type="button" class="btn btn-success btn-sm">
+                      <i class="fa fa-user"></i> <i class="fa fa-comments-o"></i>
+                    </button>
+                  {% endif %}
+                  <button onclick="window.location.href='{% url 'ver-perfil-cliente' cliente.id %}' " type="button" class="btn btn-primary btn-sm">
+                    <i class="fa fa-user"> </i> Ver perfil
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+        <p>
+          Nenhum Cliente Encontrado
+        </p>
+        {% endfor %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

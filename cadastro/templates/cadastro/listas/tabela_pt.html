@@ -1,0 +1,65 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Lista PTs</title>
+{% endblock %}
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3><i class="fa fa-lightbulb-o">Posts de <small>Transformação</small></i></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <div class="tile-body">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Numero</th>
+                    <th>Municipio</th>
+                    <th>Bairro</th>
+                    <th>DATA</th>
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for pt in pts %}
+                  <tr>
+                    <td>{{ pt.nome_pt }}</td>
+                    <td>{{ pt.numero_pt }}</td>
+                    <td>{{ pt.municipio_pt }}</td>
+                    <td>{{ pt.bairro_pt }}</td>
+                    <td>{{ pt.data_pt|date:"d/m/Y H:i" }}</td>
+                    <td>
+                      <a href="{% url 'editar-pt' pt_id=pt.id %}">Editar</a>
+                      <a href="">Excluir</a>
+                    </td>
+                  </tr>
+                  {% empty %}
+                    <tr>
+                      <td>Nenhum Admin Encontrado</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

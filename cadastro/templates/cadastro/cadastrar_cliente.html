@@ -1,0 +1,121 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Cadastro Usuario</title>
+{% endblock %}
+
+{% block estilo %}
+<style>
+  .togglePassword{
+    position: absolute;
+    top: 49%;
+    right: 50px;
+    transform: translateY(0%);
+    cursor: pointer;
+  }
+
+  .togglePasswords{
+    position: absolute;
+    top: 58%;
+    right: 50px;
+    transform: translateY(142%);
+    cursor: pointer;
+  }
+
+</style>
+{% endblock %}
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              Ecosm<i class="fa fa-lightbulb-o">art</i>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="tile">
+          {% if request.resolver_match.view_name == "cadastro-cliente" %}
+            <h3 class="tile-title">
+              <i class="fa fa-user"> Registro Consumidor</i>
+            </h3>
+          {% else %}
+            <h3 class="tile-title">
+              <i class="fa fa-user">Editar Meus Dados</i>
+            </h3>
+          {% endif %}
+          <div class="tile-body">
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label class="form-label" for="id_username">Nome de Usuário</label>
+                <input class="form-control" type="text" name="username" id="id_username" value="{{ cliente_form.username.value|default:'' }}">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="id_email">Email</label>
+                <input class="form-control" name="email" id="id_email" type="email" placeholder="" value="{{ cliente_form.email.value|default:'' }}">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="id_telefone">Telefone</label>
+                <input class="form-control" name="telefone" id="id_telefone" type="text" placeholder="" value="{{ cliente_form.telefone.value|default:'' }}">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="password1">Palavra passe</label>
+                <input class="form-control" name="password1" id="password1" type="password" placeholder="" value="{{ cliente_form.password1.value|default:''}}">
+                <i class="fa fa-eye-slash togglePassword" id="togglePassword1"></i>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="password2">Confirme</label>
+                <input class="form-control" id="password2" name="password2" type="password" placeholder="" value="{{ cliente_form.password2.value|default:'' }}">
+                <i class="fa fa-eye-slash togglePasswords" id="togglePassword2"></i>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="id_foto_perfil">Foto Perfil</label>
+                <input class="form-control" name="foto_perfil" id="id_foto_perfil" type="file" value="{{ cliente_form.foto_perfil.value|default:'' }}">
+              </div>
+              <!-- Mensagem de erro -->
+              {% if cliente_form.errors %}
+                <div class="alert alert-danger">
+                  <ul>
+                    {% for campo in cliente_form %}
+                      {% for error in campo.errors %}
+                        <li>{{ error }}</li>
+                      {% endfor %}
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+              <div class="tile-footer">
+                <div class="row">
+                  <div class="col-md-8 col-md-offset-3">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-check-circle-fill me-2"></i>Continuar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="#"><i class="bi bi-x-circle-fill me-2"></i>Cancel</a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/script.js' %}" defer></script>
+
+{% endblock %}

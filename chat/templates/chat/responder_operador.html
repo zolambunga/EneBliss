@@ -1,0 +1,160 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Mensagens Operador</title>
+{% endblock %}
+
+{% block estilo %}
+{% endblock %}
+
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              Ecosm<i class="fa fa-lightbulb-o">rt</i>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small primary coloured-icon"><i class="icon bi bi-people fs-1"></i>
+          <div class="info">
+            <h4>Admin</h4>
+            <p><b>5</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small info coloured-icon"><i class="icon bi bi-heart fs-1"></i>
+          <div class="info">
+            <h4>Operador</h4>
+            <p><b>25</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small warning coloured-icon"><i class="icon bi bi-folder2 fs-1"></i>
+          <div class="info">
+            <h4>Clientes</h4>
+            <p><b>10</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small danger coloured-icon"><i class="icon bi bi-star fs-1"></i>
+          <div class="info">
+            <h4>Usuarios</h4>
+            <p><b>500</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="tile">
+          <h3 class="tile-title">
+            <i class="fa fa-comment"> Chat <small>Mensagens</small></i>
+          </h3>
+          <div class="ratio ratio-16x9">
+            <div class="messanger">
+              <div class="messages">
+                {% if mensagens %}
+                  {% for mensagem in mensagens %}
+                    <small>{{ mensagem.data_envio|date:"d/m/Y" }}</small>
+                    {% if mensagem.remetente.groups.all.0.name == 'Cliente'  %}
+                      <div class="message">
+                        {% if mensagem.remetente.foto_perfil %}
+                          <!-- Exibir a foto do remetente -->
+                          <img src="{{ mensagem.remetente.foto_perfil.url }}" width="40" height="40" alt="Foto de Perfil">
+                        {% else %}
+                          <!-- Exibir uma imagem padrao se o remetente nao tiver enviado uma -->
+                          <img src="/media/fotos_usuarios/sem-foto.png" style="max-width: 40px" alt="Foto Padrão">
+                        {% endif %}
+                        <p class="info">{{ mensagem.conteudo }}<br>
+                          <small>{{ mensagem.data_envio|date:"H:i" }}
+                            <span class="status">
+                              {% if mensagem.status == "enviada" %}
+                                ✓
+                              {% elif mensagem.status == "recebida" %}
+                                ✓✓
+                              {% elif mensagem.status == "visualizada" %}
+                                <span style="color:blue;">✓✓</span>
+                              {% endif %}
+                            </span>
+                          </small>
+                        </p>
+                      </div>
+                    {% else %}
+                      <div class="message"><img src="{% static 'images/img.jpg' %}">
+                        <p class="info">{{ mensagem.conteudo }}<br><small>{{ mensagem.data_envio|date:"H:i" }}</small> </p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                <p>
+                  Selecione um Administrador a direita para visualizar as mensagens
+                </p>
+                {% endif %}
+              </div>
+              <form method="POST">
+                {% csrf_token %}
+                <div class="sender">
+                  <input type="text" name="conteudo" placeholder="Send Message">
+                  <button class="btn btn-primary" type="submit"><i class="fa fa-send "></i></button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="tile">
+          <h3 class="tile-title">
+            <i class="fa fa-comments-o"></i> Conversas com Administradores
+          </h3>
+          <div class="ratio ratio-16x9">
+            <ul class="list-unstyled msg_list">
+              {% for cliente in clientes %}
+              <li>
+                <a href="{% url 'visualizar-responder' admin.id %}">
+                  <span class="image"><img src="{% static 'images/perfil.jpg' %}" alt="Profile Image"></span>
+                  <span>
+                    <span>{{ cliente.username }}</span>
+                    <span style="width:8px; height:8px; display:inline-block; border-radius:50%;
+                      {% if cliente.online %} background-color: green; {% else %} background-color: red;
+                      {% endif %}">
+                    </span>
+                    <span class="time">{{ cliente.ultima_mensagem.data_envio|date:"d/m/Y"}} </span>
+                  </span>
+                  <span class="message">
+                    {{ cliente.ultima_mensagem | truncatewords:5 }}
+                  </span>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
