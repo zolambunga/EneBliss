@@ -1,0 +1,17 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>erro</title>
+{% endblock %}
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="page-error tile">
+    <h1 class="text-danger"><i class="bi bi-exclamation-circle"></i> ERRO: ss</h1>
+    <p>The page you have requested is not found.</p>
+    <p><a class="btn btn-primary" href="{% url 'painel-operador' %}">Go Back</a></p>
+  </div>
+</div>
+{% endblock %}

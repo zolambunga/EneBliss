@@ -1,0 +1,346 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-ao">
+<head>
+    {% block titulo %}
+    <title>Painel Modelo</title>
+    {% endblock %}
+
+    {% block estilo %}
+    <style></style>
+    {% endblock %}
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.min.css' %}">
+    <!-- Bootstrap -->
+    <link href="{% static 'templates/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome Responsável por todos os icones-->
+    <link href="{% static 'templates/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+
+    <!-- Custom Theme Style -->
+    <link href="{% static 'templates/build/css/custom.min.css' %}" rel="stylesheet">
+  </head>
+  <body class="nav-md footer_fixed">
+    <div class="container body">
+      <div class="main_container">
+
+        {% block menu_lateral %}
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="" class="site_title">EcoSm<i class="fa fa-lightbulb-o"></i><span>rt</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <!--img src="{% static 'images/perfil.jpg' %}" alt="..." class="img-circle profile_img"-->
+                {% if user.foto_perfil %}
+
+                  <!-- Exibir a foto de perfil -->
+                  <img src="{{ user.foto_perfil.url }}" width="60" height="60" alt="Foto de Perfil" class="img-circle profile_img">
+                {% else %}
+                  <!-- Exibir uma imagem padrao se o usuario nao tiver enviado uma -->
+                  <img src="/media/fotos_usuarios/sem-foto.png" style="max-width: 128px" alt="Foto Padrão" class="img-circle profile_img">
+                {% endif %}
+              </div>
+              <div class="profile_info">
+                <span>Bem-Vindo,</span>
+                <h2>{{ user.username }}</h2>
+              </div>
+            </div>
+
+            <!-- /menu profile quick info -->
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                {% if user.groups.all.0.name == 'Admin' %}
+                  <h3>Geral</h3>
+                  <ul class="nav side-menu">
+                    <li>
+                      <a href="{% url 'painel-admin' %}"><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li>
+                      <a><i class="fa fa-edit"></i> Cadastrar <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="{% url 'cadastro-usuario' %}"><i class="fa fa-plus-square"></i>Usuarios</a></li>
+                        <li><a href="{% url 'cadastro-pt' %}"><i class="fa fa-plus-square"></i>Pts</a></li>
+                        <li><a href="{% url 'cadastro-post' %}"><i class="fa fa-plus-square"></i>Post</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a><i class="fa fa-table"></i> Tabelas <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="{% url 'lista-admin' %}">Admin</a></li>
+                        <li><a href="{% url 'lista-operadores' %}">Operadores</a></li>
+                        <li><a href="{% url 'lista-clientes' %}">Clientes</a></li>
+                        <li><a href="{% url 'lista-pt' %}">PTs</a></li>
+                        <li><a href="{% url 'lista-post' %}">Posts</a></li>
+                        <li><a href="{% url 'lista-residencia' %}">Residencias</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a><i class="fa fa-bell"></i> Notificações <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="{% url 'enviar-notificacao-cliente' notificacao_id=0 %}"><i class="fa fa-plus-square"></i>Consumidores</a></li>
+                        <li><a href="{% url 'enviar-notificacao-operador' notificacao_id=0 %}"><i class="fa fa-plus-square"></i>Operadores</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a><i class="fa fa-comment"></i> Mensagens <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                          <li><a href=""><i class="fa fa-plus-square"></i>Admin</a></li>
+                        <li><a href="{% url 'enviar-mensagem' operador_id=0 %}"><i class="fa fa-plus-square"></i>Operador</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="{% url 'perfil-usuario' %}"><i class="fa fa-user"></i> Meu Perfil </a>
+                    </li>
+                  </ul>
+                {% elif user.groups.all.0.name == 'Operador'  %}
+                  <h3>Geral</h3>
+                  <ul class="nav side-menu">
+                    <li>
+                      <a href="{% url 'painel-operador' %}"><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li>
+                      <a><i class="fa fa-edit"></i> Cadastrar <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="{% url 'cadastro-usuario' %}"><i class="fa fa-plus"></i>Consumidores</a></li>
+                        <li><a href="{% url 'cadastro-pt' %}"><i class="fa fa-plus-square"></i>PTs</a></li>
+                        <li><a href="{% url 'cadastro-post' %}"><i class="fa fa-plus-square"></i>Post</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a><i class="fa fa-table"></i> Tabelas <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href="{% url 'lista-clientes' %}">Clientes</a></li>
+                        <li><a href="{% url 'lista-pt' %}">PTs</a></li>
+                        <li><a href="{% url 'lista-post' %}">Posts</a></li>
+                        <li><a href="{% url 'lista-residencia' %}">Residencias</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a><i class="fa fa-comment"></i> Mensagens<span class="fa fa-chevron-down"></span> </a>
+                      <ul class="nav child_menu">
+                        <li><a href="{% url 'responder-admin' admin_id=0 %}"><i class="fa fa-plus-square"></i>Administrador<span class="badge bg-green">6</span></a></li>
+                        <li><a href="{% url 'enviar-mensagem' operador_id=0 %}"><i class="fa fa-plus-square"></i>Operador<span class="badge bg-green">6</span></a></li>
+                        <li><a href="{% url 'visualizar-responder' cliente_id=0 %}"><i class="fa fa-plus-square"></i>Cliente<span class="badge bg-green">6</span></a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="{% url 'visualizar-notificacao-operador' notificacao_id=0 tipo='0' %}"><i class="fa fa-bell"></i> Notificações</a>
+                    </li>
+                    <li>
+                      <a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
+                    </li>
+                    <li>
+                      <a href="{% url 'perfil-usuario' %}"><i class="fa fa-user"></i> Meu Perfil </a>
+                    </li>
+                  </ul>
+                {% else %}
+                  <h3>Geral</h3>
+                  <ul class="nav side-menu">
+                    <li>
+                      <a href="{% url 'painel-cliente' %}"><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'enviar-mensagem' operador_id=0 %}"><i class="fa fa-comment"></i>Mensagens</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'visualizar-notificacao-cliente' notificacao_id=0 tipo='0' %}"><i class="fa fa-bell"></i> Notificações</a>
+                    </li>
+
+                    <li>
+                      <a><i class="fa fa-bolt"></i> Carregamento <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+
+                        <li><a href="{% url 'meu-pagamento' %}"><i class="fa fa-plus-square"></i>Meu Pagamento</a></li>
+
+                      </ul>
+                    </li>
+
+                    <li>
+                      <a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
+                    </li>
+                  </ul>
+                {% endif %}
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="{% url 'index' %}">
+                <span class="fa glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+        {% endblock  %}
+
+        <!-- top navigation -->
+        {% block menu_top %}
+        <div class="top_nav">
+          <div class="nav_menu">
+            <div class="nav toggle">
+              <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+            <nav class="nav navbar-nav">
+              <ul class=" navbar-right">
+                <li class="nav-item dropdown open" style="padding-left: 15px;">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                    {% if user.foto_perfil %}
+                      <!-- Exibir a foto de perfil -->
+                      <img src="{{ user.foto_perfil.url }}" alt="" title="">{{ user.username }}
+                    {% else %}
+                      <img src="/media/fotos_usuarios/sem-foto.png" alt="" title="">{{ user.username }}
+                    {% endif %}
+                    <!--img src="{% static 'images/perfil.jpg' %}" alt="">{{ user.username }}-->
+                  </a>
+                  <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item"  href="javascript:;"> Profile</a>
+                    <a class="dropdown-item"  href="javascript:;">
+                      <span class="badge bg-red pull-right">50%</span>
+                      <span>Settings</span>
+                    </a>
+                    <a class="dropdown-item"  href="javascript:;">Help</a>
+                    <a class="dropdown-item"  href="{% url 'logout' %}"><i class="fa fa-sign-out pull-right"></i>Sair</a>
+                  </div>
+                </li>
+
+                <li role="presentation" class="nav-item dropdown open">
+                  <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">6</span>
+                  </a>
+                  <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        {% if user.foto_perfil %}
+                          <!-- Exibir a foto de perfil -->
+                          <span class="image">
+                            <img src="{{ user.foto_perfil.url }}" alt="" title="">
+                          </span>
+                        {% else %}
+                          <span class="image">
+                            <img src="/media/fotos_usuarios/sem-foto.png" alt="" title="">
+                          </span>
+                        {% endif %}
+                        <!--span class="image"><img src="images/img2.JPG" alt="Profile Image" /></span-->
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <div class="text-center">
+                        <a class="dropdown-item">
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+        {% endblock %}
+
+        <!-- page content -->
+        {% block conteudo %}
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Multilevel Menu <small> Page to demonstrate multilevel menu</small></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock  %}
+        <!-- /page content -->
+
+        <!-- footer content -->
+        {% block rodape %}
+        <footer>
+          <div class="pull-right">
+            <i class="fa fa-mortar-board"></i><span>EcoSmart - Desenvolvido Pelo grupo nº11</span>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        {% endblock %}
+      </div>
+      <!-- /footer content -->
+    </div>
+    <!-- jQuery -->
+    <script src="{% static 'templates/js/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'templates/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{% static 'templates/build/js/custom.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+  </body>
+</html>

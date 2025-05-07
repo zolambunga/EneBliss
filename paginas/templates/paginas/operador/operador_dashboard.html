@@ -1,0 +1,103 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Dashboar Operador</title>
+{% endblock %}
+
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              EcoSm<i class="fa fa-lightbulb-o">rt<small></small></i>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small primary coloured-icon"><i class="icon bi bi-people fs-1"></i>
+          <div class="info">
+            <h4>Operador</h4>
+            <p><b>5</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small info coloured-icon"><i class="icon bi bi-heart fs-1"></i>
+          <div class="info">
+            <h4>Operador</h4>
+            <p><b>25</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small warning coloured-icon"><i class="icon bi bi-folder2 fs-1"></i>
+          <div class="info">
+            <h4>Clientes</h4>
+            <p><b>10</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small danger coloured-icon"><i class="icon bi bi-star fs-1"></i>
+          <div class="info">
+            <h4>Usuarios</h4>
+            <p><b>500</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="tile">
+          <h3 class="tile-title">Gráfico Dos Usuários</h3>
+          <div class="ratio ratio-16x9">
+            <div id="salesChart"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="tile">
+          <h3 class="tile-title">Usuários Ativos</h3>
+          <div class="ratio ratio-16x9">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for op in operadores %}
+                  <tr>
+                    <td>{{ op.username }}</td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td>Nenhum Operador Encontrado</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Dashboard Admin</title>
+{% endblock %}
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <!--div class=""-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              <img src="{% static 'images/eco.png' %}">
+              <i class="fa fa-lightbulb-o">Comprovativo Digital<small></small></i>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <section class="invoice">
+
+            <div class="row mb-4">
+              <div class="col-6">
+                <h2 class="page-header"><i class="bi bi-globe"></i>EcoSmart</h2>
+              </div>
+
+              <div class="col-6">
+                <h5 class="text-end">Data: {{ detalhes.data_transacao|date:"d/m/Y" }}</h5>
+              </div>
+            </div>
+
+            <div class="row invoice-info">
+              <div class="col-4">From
+                <address><strong>{{ user.username }}</strong><br>518 Akshar Avenue<br>Gandhi Marg<br>New Delhi<br>Email: {{ detalhes.usuario.email }}</address>
+              </div>
+
+              <div class="col-4">To
+                <address><strong>{{ destinatario.usuario.username }}</strong><br>795 Folsom Ave, Suite 600<br>San Francisco, CA 94107<br>Phone: {{ detalhes.usuario.telefone }}<br>Email: {{ detalhes.usuario.email }}</address>
+              </div>
+
+              <div class="col-4"><b>Invoice #007612</b><br><br><b>Order ID:</b>{{ detalhes.usuario.id }}<br><b>Payment Due:</b> 2/22/2014<br><b>Account:</b> 968-34567</div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Qty</th>
+                      <th>Product</th>
+                      <th>Serial #</th>
+                      <th>Description</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>The Hunger Games</td>
+                      <td>455-981-221</td>
+                      <td>El snort testosterone trophy driving gloves handsome</td>
+                      <td>$41.32</td>
+                    </tr>
+
+                    <tr>
+                      <td>1</td>
+                      <td>City of Bones</td>
+                      <td>247-925-726</td>
+                      <td>Wes Anderson umami biodiesel</td>
+                      <td>$75.52</td>
+                    </tr>
+
+                    <tr>
+                      <td>1</td>
+                      <td>The Maze Runner</td>
+                      <td>545-457-47</td>
+                      <td>Terry Richardson helvetica tousled street art master</td>
+                      <td>$15.25</td>
+                    </tr>
+
+                    <tr>
+                      <td>1</td>
+                      <td>The Fault in Our Stars</td>
+                      <td>757-855-857</td>
+                      <td>Tousled lomo letterpress</td>
+                      <td>$03.44</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row d-print-none mt-2">
+              <div class="col-12 text-end"><a class="btn btn-primary" href="{% url 'realizar-transferencia' destinatario.id valor_energia_kzs }}"><i class="bi bi-printer me-2"></i>Realizar Pagamento</a></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  <!--/div-->
+</div>
+{% endblock %}

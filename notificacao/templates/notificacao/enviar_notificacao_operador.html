@@ -1,0 +1,152 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Mensagens</title>
+{% endblock %}
+
+{% block estilo %}
+{% endblock %}
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <!--div class=""-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              Ecosm<i class="fa fa-lightbulb-o">rt</i>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small primary coloured-icon"><i class="icon bi bi-people fs-1"></i>
+          <div class="info">
+            <h4>Admin</h4>
+            <p><b>5</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small info coloured-icon"><i class="icon bi bi-heart fs-1"></i>
+          <div class="info">
+            <h4>Operador</h4>
+            <p><b>25</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small warning coloured-icon"><i class="icon bi bi-folder2 fs-1"></i>
+          <div class="info">
+            <h4>Clientes</h4>
+            <p><b>10</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small danger coloured-icon"><i class="icon bi bi-star fs-1"></i>
+          <div class="info">
+            <h4>Usuarios</h4>
+            <p><b>500</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="tile">
+          <h3 class="tile-title">
+            <i class="fa fa-comment"> Chat <small> Notificações</small></i>
+          </h3>
+          <div class="ratio ratio-16x9">
+            <div class="messanger">
+              <div class="messages">
+                {% if notificacao_selecionada %}
+                  {% if notificacao_selecionada.remetente.id == user.id  %}
+                    <div class="message me"><img src="{% static 'images/img.jpg' %}">
+                      <p class="info"> <strong> {{ notificacao_selecionada.mensagem }} </strong><br>
+                        <small>{{ notificacao_selecionada.data_criacao|date:"H:i" }}
+                          <span class="status">
+                            {% if notificacao_selecionada.status == "enviada" %}
+                              ✓
+                            {% endif %}
+                          </span>
+                        </small>
+                      </p>
+                    </div>
+                  {% else %}
+                    <p>
+                      <div class="message"><img src="{% static 'images/img.jpg' %}">
+                        <p class="info"> <strong> {{ notificacao_selecionada.mensagem }} </strong>
+                          <small>{{ notificacao_selecionada.data_criacao|date:"H:i" }}
+                            <span class="status">
+                              {% if notificacao_selecionada.status == "enviada" %}
+                                ✓
+                              {% endif %}
+                            </span>
+                          </small>
+                        </p>
+                      </div>
+                    </p>
+                  {% endif %}
+                {% else %}
+                <p>
+                  Selecione uma Notificação a Direita para visualizares
+                </p>
+                {% endif %}
+              </div>
+              <form method="POST">
+                {% csrf_token %}
+                <div class="sender">
+                  <input type="text" name="conteudo" placeholder="Send Message">
+                  <button class="btn btn-primary" type="submit"><i class="fa fa-send "></i></button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="tile">
+          <h3 class="tile-title">
+            <i class="fa fa-comments-o"></i>
+            Notificações Enviadas
+          </h3>
+          <div class="ratio ratio-16x9">
+            <ul class="list-unstyled top_profiles scroll-view">
+              {% for notificacao in todas_notificacoes %}
+                <li class="media event">
+                  <a class="pull-left border-aero profile_thumb">
+                    <i class="fa fa-user aero"></i>
+                  </a>
+                  <div class="media-body">
+                    <a href="{% url 'enviar-notificacao-operador' notificacao.id %}">
+                      <p class="title">{{ notificacao.remetente }}</p>
+                      <p><strong>{{ notificacao.mensagem | truncatewords:5 }}</strong></p>
+                      <p> <small>{{ notificacao.data_criacao|date:"d/m/Y"}}</small></p>
+                    </a>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

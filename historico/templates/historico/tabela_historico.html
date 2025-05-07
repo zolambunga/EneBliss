@@ -1,0 +1,68 @@
+{% extends 'paginas/modelo2.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Lista Historico</title>
+{% endblock %}
+
+
+
+{% block conteudo %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="title_left">
+            <h3>
+              <i class="fa fa-lightbulb-o">Historico de Carregamento<small></small></i></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <div class="tile-body">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                  <tr>
+                    <th>Usuário</th>
+                    <th>Proprietário</th>
+                    <th>Destinatario</th>
+                    <th>Kzs</th>
+                    <th>Kwh</th>
+                    <th>Data</th>
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for hist in historico %}
+                  <tr>
+                    <td>{{ hist.usuario.username }}</td>
+                    <td>{{ hist.residencia.nome_proprietario }}</td>
+                    <td>{{ hist.valor_energia_kzs }}</td>
+                    <td>{{ hist.valor_energia_kzs }}</td>
+                    <td>{{ hist.quatidade_kwh }}</td>
+                    <td>{{ hist.data_transacao|date:"d/m/Y H:i" }}</td>
+                    <td>
+                      <a href="{% url 'detalhes-carregamento' hist.id %}">Ver Detalhes</a>
+                    </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td>Nenhum Historico Encontrado</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
