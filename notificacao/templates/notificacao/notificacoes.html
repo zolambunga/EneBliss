@@ -5,6 +5,16 @@
 <title>Notificações</title>
 {% endblock %}
 
+{% block estilo %}
+<style>
+  .ratio-16px9p{
+      position: relative;
+      width: 100%;
+      padding-top: 75.25%;
+      overflow-y: auto;
+      overflow-x: hidden}
+</style>
+{% endblock %}
 
 {% block conteudo %}
 <div class="right_col" role="main">
@@ -84,7 +94,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="tile">
-          <div class="ratio ratio-16x9">
+          <div class="ratio ratio-16px9p">
             <div class="inbox-body">
               <div class="mail_heading row">
                 <div class="col-md-12">
@@ -99,7 +109,7 @@
                 <ul>
                   {% for notificacao in notificacoes %}
                     {% if notificacao.get_class_name == 'NotificacaoAdmin' %}
-                      <li>
+                      <!--li-->
                         <a href="{% url 'visualizar-notificacao-cliente' notificacao.id 'admin' %}">
                           <div class="mail_list">
                             <div class="left">
@@ -113,9 +123,9 @@
                             </div>
                           </div>
                         </a>
-                      </li>
+                      <!--/li-->
                     {% elif notificacao.get_class_name == 'NotificacaoAutonoma' %}
-                      <li>
+                      <!--li-->
                         <a href="{%  url 'visualizar-notificacao-cliente' notificacao.id 'sistema' %}">
                           <div class="mail_list">
                             <div class="left">
@@ -130,7 +140,7 @@
                             </div>
                           </div>
                         </a>
-                      </li>
+                      <!--/li-->
                     {% endif %}
                   {% endfor %}
                 </ul>
@@ -143,7 +153,7 @@
 
       <div class="col-md-6">
         <div class="tile">
-          <div class="ratio ratio-16x9">
+          <div class="ratio ratio-16px9p">
             <div class="inbox-body">
               <div class="mail_heading row">
                 {% if notificacao_selecionada %}
@@ -188,7 +198,7 @@
                   <div class="view-mail">
                     <p>
                       {{ notificacao_selecionada.mensagem }}
-                      <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Trash"><i class="fa fa-trash-o"></i></button>
+                      <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></button>
                     </p>
                   </div>
                 {% else %}

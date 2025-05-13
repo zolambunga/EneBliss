@@ -1,4 +1,4 @@
-
+'''
 from django import forms
 from django.contrib.auth.models import Group, User
 from django.conf import settings
@@ -18,5 +18,5 @@ class PagamentoForm(forms.ModelForm):
         if valor < settings.PAGAMENTO_MINIMO_KZ:
             raise forms.ValidationError(f'O valor mínimo é kz {settings.PAGAMENTO_MINIMO_KZ}.')
         return valor
-
+'''
 

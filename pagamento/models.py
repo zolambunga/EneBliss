@@ -1,4 +1,4 @@
-
+'''
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -13,5 +13,5 @@ class Pagamento(models.Model):
 
     def __str__(self):
         return f'{self.usuario} - Kzs {self.valor} ({self.status})'
-
+'''
 

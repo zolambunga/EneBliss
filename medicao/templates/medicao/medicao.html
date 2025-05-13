@@ -72,24 +72,10 @@
           <h3 class="tile-title">Usuários Ativos</h3>
           <div class="ratio ratio-16x9">
             <div class="table-responsive">
-              <table class="table table-hover table-bordered" id="sampleTable">
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for op in operadores %}
-                  <tr>
-                    <td>{{ op.username }}</td>
-                  </tr>
-                  {% empty %}
-                  <tr>
-                    <td>Nenhum Operador Encontrado</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+              <canvas id="graficoConsumo">
+
+              </canvas>
+              <button onclick="solicitarMedicao()">Obter Medição</button>
             </div>
           </div>
         </div>
@@ -97,28 +83,33 @@
     </div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-  //Função para buscar as medições via AJaX
-  function fetchMedicoes(){
-    fetch('api/medicoes/')// Aqui é o endpoint da sua api
-    .then(response => response.json())
-    .then(data => {
-      const mediconesContainer = document.getElementById('medicoes');
-      medicionesContainer.innerHTML = '';//Limpa o conteudo
-      data.forEach(medicao => {
-        const medicaoElement = document.createElement('div');
-        medicaoElement.innerHTML = <p>Resideência: medicao.residencia</p>
-          <p>Energia Consumida (Kwh): {medicao.energia_consumida_kwh}</p>
-          <p>Energia Restante (Kwh): {medicao.energia_restante_kwh}</p>
-          <p>Energia Comprada (Kzs): {medicao.energia_comprada_kzs}</p>;
-        medicionesContainer.appendChild(medicaoElement);
-      });
-    })
-    .catch(error => console.error("Erro ao buscar medições:", error));
+  var residenciaID = {{ data.residencia }};
+  var socket = new  WebSocket("ws://localhost:8000/ws/medicao/?residencia=" + residenciaID);
+
+  function solicitarMedicao(){
+    socket.send(JSON.stringfy({acao:'solicitar-medicao'}));
   }
 
-  //Chama a função a cada 5 segundos para atualizar os dados em tempo real
-  setInterval(fetchMedicoes, 5000);
+  socket.onmessage = function(event):
+    var data = JSON.parse(event.data):
+
+    fetch('solicitar-medicao').then(response => response.json()).then(data => {
+      const ctx = document.getElementById('graficoConsumo').getContext('2d')
+      new Chart(ctx, {
+                        type:'line', data:
+                        {labels: ['Agora'], datasets:
+                            [
+                                {label:'Tensão (V)', data:[data.tensao], borderColor:'blue', fill:false},
+                                {label:'Corrente (C)', data:[data.corrente], borderColor:'red', fill:false},
+                                {label:'Potência (P)', data:[data.potencia], borderColor:'green', fill:false},
+                            ]
+                        }
+      })
+    })
+  }
 </script>
 {% endblock %}
 

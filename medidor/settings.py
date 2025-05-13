@@ -186,12 +186,14 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'gonga396@gmail.com'
 EMAIL_HOST_PASSWORD = 'Ti10ad11ad12bd$'
 
-
+'''
 #Configurando PayPal
-PAYPAL_CLIENT_ID = "AYcvUimTtlwQG7PiWisWCKjx1uO_lhOYS4wLa9R3uZMelERn6leeR8LoPZ0zeT-9tExBp6UMONxhE9K9"
+PAYPAL_CLIENT_ID = "AYcvUimTtlwQG7PiWisWCKjx1uO_lhOYS4wLa9R3uZMeIERn6leeR8LoPZ0zeT-9tExBp6UMONxhE9K9"
 PAYPAL_CLIENT_SECRET = "EFdATyf87XfE-eMw4JR6FjQvY4eD2fLI_PKCOjY_dxdj-ieLAtjQE8PaA_hiQveJEcZ-yeRcytEfQ3bQ"
 PAYPAL_ENV = "sandbox"
 PAYPAL_CURRENCY = "USD" #Moeda definida como kwanza
 PAYPAL_API_URL = "https://api.sandbox.paypal.com" if PAYPAL_ENV == "sandbox" else "http://api.paypal.com"
 PAGAMENTO_MINIMO_KZ = 1.00
 ESP32_API_URL = 'http://esp32_local_ip/api'
+'''
+

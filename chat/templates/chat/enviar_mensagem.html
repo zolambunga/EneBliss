@@ -6,6 +6,14 @@
 {% endblock %}
 
 {% block estilo %}
+<style>
+  .ratio-16px9p{
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      overflow-y: auto;
+      overflow-x: hidden}
+</style>
 {% endblock %}
 
 
@@ -141,10 +149,10 @@
             <i class="fa fa-comments-o"></i>
             Conversas com operadores
           </h3>
-          <div class="ratio ratio-16x9">
+          <div class="ratio ratio-16px9p">
             <ul class="list-unstyled top_profiles scroll-view">
               {% for operador in operadores %}
-                <li class="media event">
+                <li class="media event scroll-view">
                   {% if user.groups.all.0.name == 'Admin' %}
                     {% if operador.foto_perfil %}
                       <!-- Exibir a foto de perfil -->

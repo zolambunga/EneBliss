@@ -11,13 +11,8 @@ def atualizar_mensagens_recebidas(sender, instance, created, **kwargs):
         novas mensagens, se tiver atualiza o status da mensagem para recebido
     '''
 
-    print(f'SINAL ATIVO: {instance.username} ficou online')
-
     if instance.online:
        Mensagem.objects.filter(destinatario=instance,
                                status="enviada").update(status="recebida")
 
-       #print(f'Mensagens pendentes encontradas: {mensagens.count()}')
-       #mensagens.update(status="recebida")
 
-       #mensagens.update(status="recebida")
