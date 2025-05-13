@@ -7,7 +7,8 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auth', '0024_user_foto_perfil'),
+       # ('auth', '0024_user_foto_perfil'),
+        ('auth', '0012_alter_user_first_name_max_length'),
         ('notificacao', '0001_initial'),
     ]
 
