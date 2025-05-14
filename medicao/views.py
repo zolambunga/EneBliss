@@ -43,7 +43,7 @@ def solicitar_medicao(request):
 
             residencia=usuario.residencia,
             tensao=dados.get["tensao"],
-            corrente=dados.ge["corrente"],
+            corrente=dados.get["corrente"],
             potencia=dados.get["potencia"],
             energia=dados.get["energia"],
 
@@ -52,6 +52,6 @@ def solicitar_medicao(request):
 
     else:
 
-        return JsonResponse({'Erro': 'Falha ao obterv dados do Esp32'}, status=500)
+        return JsonResponse({'Erro': 'Falha ao obter dados do Esp32'}, status=500)
 
 
