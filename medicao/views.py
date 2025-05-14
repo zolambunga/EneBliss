@@ -42,10 +42,10 @@ def solicitar_medicao(request):
         medicao = Medicao.objects.create(
 
             residencia=usuario.residencia,
-            tensao=dados.get["tensao"],
-            corrente=dados.get["corrente"],
-            potencia=dados.get["potencia"],
-            energia=dados.get["energia"],
+            tensao=dados.get("tensao"),
+            corrente=dados.get("corrente"),
+            potencia=dados.get("potencia"),
+            energia=dados.get("energia"),
 
         )
         return JsonResponse(MedicaoSerializer(MedicaoSerializer(medicao)).data)
