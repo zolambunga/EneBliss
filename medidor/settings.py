@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'pagamento.apps.PagamentoConfig',
     'historico.apps.HistoricoConfig',
     'medicao.apps.MedicaoConfig',
+    'api',
 ]
 
 CRISPY_TEMPLATES_PACK = 'bootstrap4'
